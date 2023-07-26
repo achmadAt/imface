@@ -3,6 +3,18 @@
 this cli project is depended on serengil deepface project
 https://github.com/serengil/deepface
 
+
+because the program not deployed in pypi yet you can copy the project using git and use pip to install
+```
+pip install .
+```
+
+to uninstall
+
+```
+pip uninstall imface
+```
+
 how to use
 
 ```
