@@ -6,7 +6,7 @@ import ast
 from imface.utils import deepface_util as utils
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser("imface cli for image vector")
     parser.add_argument("--represent", help="represent image embed vector", default=False)
     parser.add_argument("-v", "--version", help="version", default=False, action="store_true")
     subparsers = parser.add_subparsers(title="subcommands", dest="command")
@@ -26,7 +26,7 @@ def main():
         print(treshold)
         exit(0)
 
-    if args.represent:
+    elif args.represent:
         target_image = Path(args.represent)
 
         if not target_image.exists():
@@ -38,7 +38,7 @@ def main():
         except Exception as e:
             print("error " + repr(e))
 
-    if args.extract:
+    elif args.extract:
         target_image = Path(args.extract)
 
         if not target_image.exists():
@@ -53,7 +53,7 @@ def main():
         except Exception as e:
             print("error" + repr(e))
 
-    if args.command == "distance":
+    elif args.command == "distance":
         if args.source and args.target:
             # Convert the string representation of vectors to lists of floats
             source_vector = ast.literal_eval(args.source)
@@ -64,3 +64,6 @@ def main():
             target_vector = np.array(target_vector, dtype=np.float32)
             res = utils.getDistance(source_vector, target_vector)
             print(res)
+
+    if __name__ == "__main__":
+        main()
