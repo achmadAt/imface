@@ -37,3 +37,4 @@ def getDistance(source, target):
 
 def getTreshold():
     threshold = dst.findThreshold(models[2], "cosine")
+    return threshold

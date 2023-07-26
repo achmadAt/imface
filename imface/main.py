@@ -3,23 +3,25 @@ import argparse
 from pathlib import Path
 import numpy as np
 import ast
-import utils.deepface_util as utils
+from imface.utils import deepface_util as utils
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--represent", help="represent image embed vector", default=False)
+    parser.add_argument("-v", "--version", help="version", default=False, action="store_true")
     subparsers = parser.add_subparsers(title="subcommands", dest="command")
     distance_command = subparsers.add_parser("distance", help="to get distance between two vector")
     distance_parser = subparsers.add_parser("distance", help="Calculate cosine distance between two vectors.")
     distance_parser.add_argument("-s", "--source", required=True, help="Source vector (space-separated)")
     distance_parser.add_argument("-t", "--target", required=True, help="Target vector (space-separated)")
     parser.add_argument("--extract", help="extract face, and only allowed to extrace one face, inset the image path", default=False)
+    parser.add_argument("--treshold", help="get treshold", default=False, action="store_true")
     args = parser.parse_args()
 
-    if "--version" in sys.argv[1:]:
+    if args.version:
         print("0.0.1")
         exit(0)
-    elif "--treshold" in sys.argv[1:]:
+    elif args.treshold:
         treshold = utils.getTreshold()
         print(treshold)
         exit(0)
