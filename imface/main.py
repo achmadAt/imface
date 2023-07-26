@@ -62,5 +62,5 @@ def main():
             # Convert the lists to numpy arrays with the correct data type
             source_vector = np.array(source_vector, dtype=np.float32)
             target_vector = np.array(target_vector, dtype=np.float32)
-            res = dst.findCosineDistance(source_vector, target_vector)
+            res = utils.getDistance(source_vector, target_vector)
             print(res)
