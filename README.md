@@ -31,3 +31,8 @@ to extract embedded vector of face in image, only just for one face per image
 imface --treshold
 ```
 to get the treshold that we use
+
+```
+imface distance -s [source-vector] -t [target-vector]
+```
+to get similiarity distance between image vector
