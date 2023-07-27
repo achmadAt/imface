@@ -4,6 +4,11 @@ this cli project is depended on serengil deepface project
 https://github.com/serengil/deepface
 
 
+install gdown first
+```
+pip install gdown
+```
+
 how to install
 ```
 pip install imface

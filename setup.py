@@ -27,12 +27,12 @@ class CustomInstallCommand(install):
 with open("README.md", "r") as file:
     description = file.read()
 
-dependecies = ['deepface']
+requirements = ["deepface"]
 
 setup(
     name='imface',
-    version='0.1',
-    install_requires=dependecies,
+    version='0.0.0.1',
+    install_requires=requirements,
     packages=find_packages(),
     entry_points={"console_scripts": ["imface=imface.main:main"]},
     author="Achmad Alfazari",
@@ -42,6 +42,7 @@ setup(
     ],
     long_description=description,
     long_description_content_type="text/markdown",
+    python_requires=">=3.5.5",
     cmdclass={
         'install': CustomInstallCommand,
     },
