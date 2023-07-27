@@ -24,6 +24,9 @@ class CustomInstallCommand(install):
         install.run(self)
         downloadWeights()
 
+with open("README.md", "r") as file:
+    description = file.read()
+
 dependecies = ['deepface']
 
 setup(
@@ -37,6 +40,8 @@ setup(
     classifiers=[
         "Programming Language :: Python",
     ],
+    long_description=description,
+    long_description_content_type="text/markdown",
     cmdclass={
         'install': CustomInstallCommand,
     },

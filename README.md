@@ -4,9 +4,9 @@ this cli project is depended on serengil deepface project
 https://github.com/serengil/deepface
 
 
-because the program not deployed in pypi yet you can copy the project using git and use pip to install
+how to install
 ```
-pip install .
+pip install imface
 ```
 
 to uninstall
