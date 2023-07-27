@@ -31,9 +31,10 @@ requirements = ["deepface"]
 
 setup(
     name='imface',
-    version='0.0.0.1',
+    version='0.0.0.1.1',
     install_requires=requirements,
     packages=find_packages(),
+    include_package_data=True,
     entry_points={"console_scripts": ["imface=imface.main:main"]},
     author="Achmad Alfazari",
     license="License :: OSI Approved :: MIT License",

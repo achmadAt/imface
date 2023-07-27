@@ -19,7 +19,7 @@ def main():
     args = parser.parse_args()
 
     if args.version:
-        print("0.0.0.1")
+        print("0.0.0.1.1")
         exit(0)
     elif args.treshold:
         treshold = utils.getTreshold()
