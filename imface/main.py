@@ -37,6 +37,7 @@ def main():
             print(embed)
         except Exception as e:
             print("error " + repr(e))
+            raise SystemExit(1)
 
     elif args.extract:
         target_image = Path(args.extract)
@@ -50,8 +51,10 @@ def main():
                 print("error only allowed one face")
             else:
                 print(data[0]['embedding'])
+                raise SystemExit(1)
         except Exception as e:
             print("error" + repr(e))
+            raise SystemExit(1)
 
     elif args.command == "distance":
         if args.source and args.target:

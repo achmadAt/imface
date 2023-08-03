@@ -4,7 +4,35 @@ from pathlib import Path
 import gdown
 import os
 
-home_dir = Path.home()
+
+def initialize_folder():
+    """Initialize the folder for storing weights and models.
+
+    Raises:
+        OSError: if the folder cannot be created.
+    """
+    home = get_deepface_home()
+    deepFaceHomePath = home + "/.deepface"
+    weightsPath = deepFaceHomePath + "/weights"
+
+    if not os.path.exists(deepFaceHomePath):
+        os.makedirs(deepFaceHomePath, exist_ok=True)
+        print("Directory ", home, "/.deepface created")
+
+    if not os.path.exists(weightsPath):
+        os.makedirs(weightsPath, exist_ok=True)
+        print("Directory ", home, "/.deepface/weights created")
+
+
+def get_deepface_home():
+    """Get the home directory for storing weights and models.
+
+    Returns:
+        str: the home directory.
+    """
+    return str(os.getenv("DEEPFACE_HOME", default=str(Path.home())))
+
+home_dir = get_deepface_home()
 def downloadWeights():
     facenet512_url = "https://github.com/serengil/deepface_models/releases/download/v1.0/facenet512_weights.h5"
     retinaface_url = "https://github.com/serengil/deepface_models/releases/download/v1.0/retinaface.h5"
@@ -22,6 +50,7 @@ def downloadWeights():
 class CustomInstallCommand(install):
     def run(self):
         install.run(self)
+        initialize_folder()
         downloadWeights()
 
 with open("README.md", "r") as file:
@@ -31,7 +60,7 @@ requirements = ["deepface"]
 
 setup(
     name='imface',
-    version='0.0.0.1.1',
+    version='0.0.0.1.2',
     install_requires=requirements,
     packages=find_packages(),
     include_package_data=True,
