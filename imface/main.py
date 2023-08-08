@@ -19,7 +19,7 @@ def main():
     args = parser.parse_args()
 
     if args.version:
-        print("0.0.0.1.1")
+        print("0.0.0.1.3")
         exit(0)
     elif args.treshold:
         treshold = utils.getTreshold()
@@ -51,7 +51,6 @@ def main():
                 print("error only allowed one face")
             else:
                 print(data[0]['embedding'])
-                raise SystemExit(1)
         except Exception as e:
             print("error" + repr(e))
             raise SystemExit(1)
