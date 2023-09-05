@@ -63,7 +63,7 @@ requirements = ["deepface"]
 
 setup(
     name='imface',
-    version='0.0.0.1.8',
+    version='0.0.0.2.0',
     install_requires=requirements,
     packages=find_packages(),
     include_package_data=True,

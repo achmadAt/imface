@@ -3,7 +3,6 @@ import argparse
 from pathlib import Path
 import os
 import numpy as np
-from imface.utils import res
 import ast
 
 def main():
@@ -19,51 +18,50 @@ def main():
     parser.add_argument("--treshold", help="get treshold", default=False, action="store_true")
     args = parser.parse_args()
 
-    version =  "0.0.0.1.8"
+    version =  "0.0.0.2.0"
     if args.version:
         os.environ.setdefault("DEEPFACE_HOME", "/app")
-        res.Log(version + str(os.getenv("DEEPFACE_HOME", default=str(Path.home()))))
+        print(version + str(os.getenv("DEEPFACE_HOME", default=str(Path.home()))))
         exit(0)
     elif args.treshold:
         treshold = utils.getTreshold()
-        res.Response(treshold)
+        print(treshold)
         exit(0)
 
     elif args.represent:
         target_image = Path(args.represent)
 
         if not target_image.exists():
-            res.Log("Target image not")
+            print("Target image not exist")
             raise SystemExit(1)
         try:
             os.environ.setdefault("DEEPFACE_HOME", "/app")
-            res.Log(version + str(os.getenv("DEEPFACE_HOME", default=str(Path.home()))))
 
             from imface.utils import deepface_util as utils
             embed = utils.getEmbeddingVector(str(target_image))
-            res.Response(embed)
+            print(embed)
         except Exception as e:
-            res.Log("error " + repr(e))
+            print("error " + repr(e))
             raise SystemExit(1)
 
     elif args.extract:
         target_image = Path(args.extract)
 
         if not target_image.exists():
-            res.Log("image not exist")
+            print("image not exist")
             raise SystemExit(1)
         try:
             os.environ.setdefault("DEEPFACE_HOME", "/app")
-            res.Log(version + str(os.getenv("DEEPFACE_HOME", default=str(Path.home()))))
             
             from imface.utils import deepface_util as utils
             data = utils.extractFace(str(target_image))
             if len(data) > 1:
-                res.Log("error only allowed one face")
+                print("error only allowed one face")
+                raise SystemExit(1)
             else:
-                res.Response(data[0]['embedding'])
+                print(data[0]['embedding'])
         except Exception as e:
-            res.Log("error" + repr(e))
+            print("error" + repr(e))
             raise SystemExit(1)
 
     elif args.command == "distance":
@@ -76,7 +74,7 @@ def main():
             source_vector = np.array(source_vector, dtype=np.float32)
             target_vector = np.array(target_vector, dtype=np.float32)
             result = utils.getDistance(source_vector, target_vector)
-            res.Response(result)
+            print(result)
 
     if __name__ == "__main__":
         main()
