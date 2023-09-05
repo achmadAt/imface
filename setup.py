@@ -5,6 +5,15 @@ import gdown
 import os
 
 
+def get_deepface_home():
+    """Get the home directory for storing weights and models.
+
+    Returns:
+        str: the home directory.
+    """
+    os.environ.setdefault("DEEPFACE_HOME", "/app")
+    return str(os.getenv("DEEPFACE_HOME", default=str(Path.home())))
+
 def initialize_folder():
     """Initialize the folder for storing weights and models.
 
@@ -24,16 +33,10 @@ def initialize_folder():
         print("Directory ", home, "/.deepface/weights created")
 
 
-def get_deepface_home():
-    """Get the home directory for storing weights and models.
-
-    Returns:
-        str: the home directory.
-    """
-    return str(os.getenv("DEEPFACE_HOME", default=str(Path.home())))
 
 home_dir = get_deepface_home()
 def downloadWeights():
+    print(home_dir, "home")
     facenet512_url = "https://github.com/serengil/deepface_models/releases/download/v1.0/facenet512_weights.h5"
     retinaface_url = "https://github.com/serengil/deepface_models/releases/download/v1.0/retinaface.h5"
     if os.path.isfile(str(home_dir) + "/.deepface/weights/facenet512_weights.h5") != True:
@@ -60,7 +63,7 @@ requirements = ["deepface"]
 
 setup(
     name='imface',
-    version='0.0.0.1.3',
+    version='0.0.0.1.8',
     install_requires=requirements,
     packages=find_packages(),
     include_package_data=True,
