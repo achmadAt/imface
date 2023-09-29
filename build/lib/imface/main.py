@@ -18,7 +18,7 @@ def main():
     parser.add_argument("--treshold", help="get treshold", default=False, action="store_true")
     args = parser.parse_args()
 
-    version =  "0.0.0.2.0"
+    version =  "0.0.0.2.1"
     if args.version:
         os.environ.setdefault("DEEPFACE_HOME", "/app")
         print(version + str(os.getenv("DEEPFACE_HOME", default=str(Path.home()))))
