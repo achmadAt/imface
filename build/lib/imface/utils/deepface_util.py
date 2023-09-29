@@ -1,5 +1,4 @@
 import os
-os.environ.setdefault("DEEPFACE_HOME", "/tmp")
 from deepface import DeepFace
 from deepface.commons import functions, realtime, distance as dst
 
@@ -18,21 +17,19 @@ models = [
 
 backends = [
     "retinaface",
-    "opencv"
 ]
 
+
 def getEmbeddingVector(path: str):
-    os.environ.setdefault("DEEPFACE_HOME", "/tmp")
     embed = []
-    data = DeepFace.represent(path, model_name=models[2], enforce_detection=False, detector_backend=backends[1])
+    data = DeepFace.represent(path, model_name=models[2], enforce_detection=False, detector_backend=backends[0])
     for imgdata in data:
         embed.append(imgdata['embedding'])
     
     return embed
 
 def extractFace(path: str):
-    os.environ.setdefault("DEEPFACE_HOME", "/tmp")
-    data = DeepFace.represent(path, model_name=models[2], enforce_detection=True, detector_backend=backends[1])
+    data = DeepFace.represent(path, model_name=models[2], enforce_detection=True, detector_backend=backends[0])
     return data
 
 def getDistance(source, target):

@@ -4,7 +4,6 @@ from pathlib import Path
 import os
 import numpy as np
 import ast
-from imface.utils import deepface_util as utils
 
 def main():
     parser = argparse.ArgumentParser("imface cli for image vector")
@@ -19,9 +18,10 @@ def main():
     parser.add_argument("--treshold", help="get treshold", default=False, action="store_true")
     args = parser.parse_args()
 
+    version =  "0.0.0.2.1"
     if args.version:
-        os.environ.setdefault("DEEPFACE_HOME", "/tmp")
-        print("0.0.0.1.5", str(os.getenv("DEEPFACE_HOME", default=str(Path.home()))))
+        os.environ.setdefault("DEEPFACE_HOME", "/app")
+        print(version + str(os.getenv("DEEPFACE_HOME", default=str(Path.home()))))
         exit(0)
     elif args.treshold:
         treshold = utils.getTreshold()
@@ -32,9 +32,12 @@ def main():
         target_image = Path(args.represent)
 
         if not target_image.exists():
-            print("image not exist")
+            print("Target image not exist")
             raise SystemExit(1)
         try:
+            os.environ.setdefault("DEEPFACE_HOME", "/app")
+
+            from imface.utils import deepface_util as utils
             embed = utils.getEmbeddingVector(str(target_image))
             print(embed)
         except Exception as e:
@@ -48,9 +51,13 @@ def main():
             print("image not exist")
             raise SystemExit(1)
         try:
+            os.environ.setdefault("DEEPFACE_HOME", "/app")
+            
+            from imface.utils import deepface_util as utils
             data = utils.extractFace(str(target_image))
             if len(data) > 1:
                 print("error only allowed one face")
+                raise SystemExit(1)
             else:
                 print(data[0]['embedding'])
         except Exception as e:
@@ -66,8 +73,8 @@ def main():
             # Convert the lists to numpy arrays with the correct data type
             source_vector = np.array(source_vector, dtype=np.float32)
             target_vector = np.array(target_vector, dtype=np.float32)
-            res = utils.getDistance(source_vector, target_vector)
-            print(res)
+            result = utils.getDistance(source_vector, target_vector)
+            print(result)
 
     if __name__ == "__main__":
         main()
