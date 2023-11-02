@@ -22,7 +22,7 @@ backends = [
 
 def getEmbeddingVector(path: str):
     embed = []
-    data = DeepFace.represent(path, model_name=models[2], enforce_detection=False, detector_backend=backends[0])
+    data = DeepFace.represent(path, model_name=models[2], enforce_detection=True, detector_backend=backends[0])
     for imgdata in data:
         embed.append(imgdata['embedding'])
     
