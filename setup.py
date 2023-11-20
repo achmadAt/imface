@@ -11,7 +11,7 @@ def get_deepface_home():
     Returns:
         str: the home directory.
     """
-    os.environ.setdefault("DEEPFACE_HOME", "/app")
+    # os.environ.setdefault("DEEPFACE_HOME", "/app")
     return str(os.getenv("DEEPFACE_HOME", default=str(Path.home())))
 
 def initialize_folder():
@@ -59,7 +59,7 @@ class CustomInstallCommand(install):
 with open("README.md", "r") as file:
     description = file.read()
 
-requirements = ["deepface"]
+requirements = ["deepface", "dlib==19.24.2"]
 
 setup(
     name='imface',
