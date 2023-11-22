@@ -39,6 +39,7 @@ def downloadWeights():
     print(home_dir, "home")
     facenet512_url = "https://github.com/serengil/deepface_models/releases/download/v1.0/facenet512_weights.h5"
     retinaface_url = "https://github.com/serengil/deepface_models/releases/download/v1.0/retinaface.h5"
+    dlib_shape_url = "https://github.com/achmadAt/imface-weight/releases/download/shape_predictor_5_face_landmarks.dat/shape_predictor_5_face_landmarks.dat"
     if os.path.isfile(str(home_dir) + "/.deepface/weights/facenet512_weights.h5") != True:
         print("facenet512_weights.h5 will be downloaded...")
 
@@ -49,6 +50,11 @@ def downloadWeights():
 
         output = str(home_dir) + "/.deepface/weights/retinaface.h5"
         gdown.download(retinaface_url, output, quiet=False)
+    if os.path.isfile(str(home_dir) + "/.deepface/weights/shape_predictor_5_face_landmarks.dat") != True:
+        print("shape_predictor_5_face_landmarks.dat will be downloaded...")
+
+        output = str(home_dir) + "/.deepface/weights/shape_predictor_5_face_landmarks.dat"
+        gdown.download(dlib_shape_url, output, quiet=False)
 
 class CustomInstallCommand(install):
     def run(self):
@@ -59,11 +65,11 @@ class CustomInstallCommand(install):
 with open("README.md", "r") as file:
     description = file.read()
 
-requirements = ["deepface"]
+requirements = ["deepface", "cmake", "dlib==19.24.2"]
 
 setup(
     name='imface',
-    version='0.0.0.2.2',
+    version='0.0.0.2.3',
     install_requires=requirements,
     packages=find_packages(),
     include_package_data=True,
@@ -75,7 +81,7 @@ setup(
     ],
     long_description=description,
     long_description_content_type="text/markdown",
-    python_requires=">=3.5.5",
+    python_requires=">=3.11.5",
     cmdclass={
         'install': CustomInstallCommand,
     },
