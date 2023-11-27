@@ -69,7 +69,7 @@ requirements = ["deepface", "cmake", "dlib==19.24.2"]
 
 setup(
     name='imface',
-    version='0.0.0.2.3',
+    version='0.0.0.2.4',
     install_requires=requirements,
     packages=find_packages(),
     include_package_data=True,
@@ -81,7 +81,7 @@ setup(
     ],
     long_description=description,
     long_description_content_type="text/markdown",
-    python_requires=">=3.11.5",
+    python_requires=">=3.10.0",
     cmdclass={
         'install': CustomInstallCommand,
     },
