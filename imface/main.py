@@ -25,10 +25,6 @@ def main():
         # os.environ.setdefault("DEEPFACE_HOME", "/app")
         print(version + str(os.getenv("DEEPFACE_HOME", default=str(Path.home()))))
         exit(0)
-    elif args.treshold:
-        treshold = utils.getTreshold()
-        print(treshold)
-        exit(0)
 
     elif args.represent:
         target_image = Path(args.represent)
@@ -69,6 +65,8 @@ def main():
     elif args.command == "generate-albums":
         if args.path and args.output:
             try:
+                # os.environ.setdefault("DEEPFACE_HOME", "/app")
+                
                 from imface.utils import deepface_util as utils
                 file_names = utils.generate_faces_image(path=args.path, album_dir=args.output)
                 print(file_names)
