@@ -14,7 +14,7 @@ def main():
     #generate image album
     subparsers = parser.add_subparsers(dest="command")
 
-    generate_parser = subparsers.add_parser("generate-albums")
+    generate_parser = subparsers.add_parser("generate-crop-img")
     generate_parser.add_argument("-p", "--path", help="path to image file", required=True)
     generate_parser.add_argument("-o", "--output", help="directory to save image", required=True)
     
@@ -62,7 +62,7 @@ def main():
             print("error" + repr(e))
             raise SystemExit(1)
 
-    elif args.command == "generate-albums":
+    elif args.command == "generate-crop-img":
         if args.path and args.output:
             try:
                 # os.environ.setdefault("DEEPFACE_HOME", "/app")
