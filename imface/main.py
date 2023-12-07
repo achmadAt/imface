@@ -11,9 +11,17 @@ def main():
     parser.add_argument("-v", "--version", help="version", default=False, action="store_true")
     parser.add_argument("--extract", help="extract face, and only allowed to extrace one face, inset the image path", default=False)
     parser.add_argument("--treshold", help="get treshold", default=False, action="store_true")
+    
+    #generate image album
+    subparsers = parser.add_subparsers(dest="command")
+
+    generate_parser = subparsers.add_parser("generate-crop-img")
+    generate_parser.add_argument("-p", "--path", help="path to image file", required=True)
+    generate_parser.add_argument("-o", "--output", help="directory to save image", required=True)
+    
     args = parser.parse_args()
 
-    version =  "0.0.0.2.4"
+    version =  "0.0.0.2.5"
     if args.version:
         os.environ.setdefault("DEEPFACE_HOME", "/app")
         print(version + str(os.getenv("DEEPFACE_HOME", default=str(Path.home()))))
@@ -58,6 +66,18 @@ def main():
         except Exception as e:
             print("error" + repr(e))
             raise SystemExit(1)
+        
+    elif args.command == "generate-crop-img":
+        if args.path and args.output:
+            try:
+                os.environ.setdefault("DEEPFACE_HOME", "/app")
+                
+                from imface.utils import deepface_util as utils
+                file_names = utils.generate_faces_image(path=args.path, album_dir=args.output)
+                print(file_names)
+            except Exception as e:
+                print("error " + repr(e))
+                raise SystemExit(1)
 
 
     if __name__ == "__main__":

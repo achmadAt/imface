@@ -69,7 +69,7 @@ requirements = ["deepface", "cmake", "dlib==19.24.2"]
 
 setup(
     name='imface',
-    version='0.0.0.2.4',
+    version='0.0.0.2.5',
     install_requires=requirements,
     packages=find_packages(),
     include_package_data=True,
