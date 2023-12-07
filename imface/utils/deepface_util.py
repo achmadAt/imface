@@ -2,6 +2,7 @@ import os
 from deepface import DeepFace
 from deepface.commons import functions, realtime, distance as dst
 import uuid
+import json
 import numpy as np
 import cv2
 
@@ -43,11 +44,10 @@ def getDistance(source, target):
 #Generate face image from photo
 def generate_faces_image(path: str, album_dir: str):
     image_names = []
-    extracted_face = DeepFace.extract_faces(img_path=path, enforce_detection=True, detector_backend=backends[1], align=True)
+    extracted_face = DeepFace.extract_faces(img_path=path, enforce_detection=True, detector_backend=backends[0], align=True)
     for idx, face in enumerate(extracted_face):
         im = cv2.cvtColor(face['face'] * 255, cv2.COLOR_BGR2RGB)
-        print(np)
-        name = face["facial_area"]
+        name = uuid.uuid4()
         cv2.imwrite(os.path.join(album_dir, f"{name}.jpg"), im)
         image_names.append(os.path.join(album_dir, f"{name}.jpg"))
     return image_names
