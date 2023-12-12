@@ -11,7 +11,6 @@ def main():
     parser.add_argument("-v", "--version", help="version", default=False, action="store_true")
     parser.add_argument("--extract", help="extract face, and only allowed to extrace one face, inset the image path", default=False)
     parser.add_argument("--treshold", help="get treshold", default=False, action="store_true")
-    
     #generate image album
     subparsers = parser.add_subparsers(dest="command")
 
@@ -21,14 +20,10 @@ def main():
     
     args = parser.parse_args()
 
-    version =  "0.0.0.2.5"
+    version =  "0.0.0.2.6"
     if args.version:
         os.environ.setdefault("DEEPFACE_HOME", "/app")
         print(version + str(os.getenv("DEEPFACE_HOME", default=str(Path.home()))))
-        exit(0)
-    elif args.treshold:
-        treshold = utils.getTreshold()
-        print(treshold)
         exit(0)
 
     elif args.represent:
@@ -78,7 +73,6 @@ def main():
             except Exception as e:
                 print("error " + repr(e))
                 raise SystemExit(1)
-
 
     if __name__ == "__main__":
         main()
