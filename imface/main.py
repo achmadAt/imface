@@ -7,54 +7,51 @@ import ast
 
 def main():
     parser = argparse.ArgumentParser("imface cli for image vector")
-    parser.add_argument("--represent", help="represent image embed vector", default=False)
     parser.add_argument("-v", "--version", help="version", default=False, action="store_true")
-    subparsers = parser.add_subparsers(title="subcommands", dest="command")
-    distance_command = subparsers.add_parser("distance", help="to get distance between two vector")
-    distance_parser = subparsers.add_parser("distance", help="Calculate cosine distance between two vectors.")
-    distance_parser.add_argument("-s", "--source", required=True, help="Source vector (space-separated)")
-    distance_parser.add_argument("-t", "--target", required=True, help="Target vector (space-separated)")
-    parser.add_argument("--extract", help="extract face, and only allowed to extrace one face, inset the image path", default=False)
-    parser.add_argument("--treshold", help="get treshold", default=False, action="store_true")
+    
+    subparsers = parser.add_subparsers(dest="command")
+    #generate vector represent
+    represent_parser = subparsers.add_parser("represent")
+    represent_parser.add_argument("-p", "--path", help="path image file", required=True)
+    represent_parser.add_argument("-d", "--detector", help="detector", required=True)
+
+    #generate vector selfie
+    selfie_parser = subparsers.add_parser("selfie")
+    selfie_parser.add_argument("-p", "--path", help="path image file", required=True)
+    selfie_parser.add_argument("-d", "--detector", help="detector", required=True)
+    #generate image album
+    generate_parser = subparsers.add_parser("generate-crop-img")
+    generate_parser.add_argument("-p", "--path", help="path to image file", required=True)
+    generate_parser.add_argument("-o", "--output", help="directory to save image", required=True)
+    generate_parser.add_argument("-d", "--detector", help="face detector", required=True)
+
     args = parser.parse_args()
 
-    version =  "0.0.0.2.0"
+    version =  "0.0.0.3.3"
     if args.version:
-        os.environ.setdefault("DEEPFACE_HOME", "/app")
+        # os.environ.setdefault("DEEPFACE_HOME", "/app")
         print(version + str(os.getenv("DEEPFACE_HOME", default=str(Path.home()))))
         exit(0)
-    elif args.treshold:
-        treshold = utils.getTreshold()
-        print(treshold)
-        exit(0)
 
-    elif args.represent:
-        target_image = Path(args.represent)
-
-        if not target_image.exists():
-            print("Target image not exist")
-            raise SystemExit(1)
+    elif args.command == "represent":
         try:
-            os.environ.setdefault("DEEPFACE_HOME", "/app")
+            # os.environ.setdefault("DEEPFACE_HOME", "/app")
 
             from imface.utils import deepface_util as utils
-            embed = utils.getEmbeddingVector(str(target_image))
+            instance = utils.FaceRecognitionSingleton()
+            embed = instance.get_embedding_vector(path=args.path, detector=args.detector)
             print(embed)
         except Exception as e:
             print("error " + repr(e))
             raise SystemExit(1)
 
-    elif args.extract:
-        target_image = Path(args.extract)
-
-        if not target_image.exists():
-            print("image not exist")
-            raise SystemExit(1)
+    elif args.command == "selfie":
         try:
-            os.environ.setdefault("DEEPFACE_HOME", "/app")
+            # os.environ.setdefault("DEEPFACE_HOME", "/app")
             
             from imface.utils import deepface_util as utils
-            data = utils.extractFace(str(target_image))
+            instance = utils.FaceRecognitionSingleton()
+            data = instance.extract_face(path=args.path, detector=args.detector)
             if len(data) > 1:
                 print("error only allowed one face")
                 raise SystemExit(1)
@@ -64,17 +61,17 @@ def main():
             print("error" + repr(e))
             raise SystemExit(1)
 
-    elif args.command == "distance":
-        if args.source and args.target:
-            # Convert the string representation of vectors to lists of floats
-            source_vector = ast.literal_eval(args.source)
-            target_vector = ast.literal_eval(args.target)
-
-            # Convert the lists to numpy arrays with the correct data type
-            source_vector = np.array(source_vector, dtype=np.float32)
-            target_vector = np.array(target_vector, dtype=np.float32)
-            result = utils.getDistance(source_vector, target_vector)
-            print(result)
+    elif args.command == "generate-crop-img":
+            try:
+                # os.environ.setdefault("DEEPFACE_HOME", "/app")
+                
+                from imface.utils import deepface_util as utils
+                instance = utils.FaceRecognitionSingleton()
+                file_names = instance.generate_faces_image(path=args.path, album_dir=args.output, detector=args.detector)
+                print(file_names)
+            except Exception as e:
+                print("error " + repr(e))
+                raise SystemExit(1)
 
     if __name__ == "__main__":
         main()
