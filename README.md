@@ -23,21 +23,13 @@ pip uninstall imface
 how to use
 
 ```
-imface --represent image-path
+imface represent -p image-path -d detector(ie yolov8 or retinaface)
 ```
 to get the embedded vectors of an image
 
 ```
-imface --extract image-path
+imface selfie -p image-path -d detector(ie yolov8 or retinaface)
 ```
 to extract embedded vector of face in image, only just for one face per image
 
 ```
-imface --treshold
-```
-to get the treshold that we use
-
-```
-imface distance -s [source-vector] -t [target-vector]
-```
-to get similiarity distance between image vector
