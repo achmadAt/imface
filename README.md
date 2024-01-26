@@ -31,5 +31,3 @@ to get the embedded vectors of an image
 imface selfie -p image-path -d detector(ie yolov8 or retinaface)
 ```
 to extract embedded vector of face in image, only just for one face per image
-
-```
