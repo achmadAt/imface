@@ -11,7 +11,7 @@ def get_deepface_home():
     Returns:
         str: the home directory.
     """
-    # os.environ.setdefault("DEEPFACE_HOME", "/app")
+    os.environ.setdefault("DEEPFACE_HOME", "/app")
     return str(os.getenv("DEEPFACE_HOME", default=str(Path.home())))
 
 def initialize_folder():
@@ -70,7 +70,7 @@ requirements = ["deepface==0.0.81", "ultralytics"]
 
 setup(
     name='imface',
-    version='0.0.0.3.3',
+    version='0.0.0.3.4',
     install_requires=requirements,
     packages=find_packages(),
     include_package_data=True,

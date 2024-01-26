@@ -27,19 +27,18 @@ def main():
 
     args = parser.parse_args()
 
-    version =  "0.0.0.3.3"
+    version =  "0.0.0.3.4"
     if args.version:
-        # os.environ.setdefault("DEEPFACE_HOME", "/app")
+        os.environ.setdefault("DEEPFACE_HOME", "/app")
         print(version + str(os.getenv("DEEPFACE_HOME", default=str(Path.home()))))
         exit(0)
 
     elif args.command == "represent":
         try:
-            # os.environ.setdefault("DEEPFACE_HOME", "/app")
+            os.environ.setdefault("DEEPFACE_HOME", "/app")
 
             from imface.utils import deepface_util as utils
-            instance = utils.FaceRecognitionSingleton()
-            embed = instance.get_embedding_vector(path=args.path, detector=args.detector)
+            embed = utils.get_embedding_vector(path=args.path, detector=args.detector)
             print(embed)
         except Exception as e:
             print("error " + repr(e))
@@ -47,11 +46,10 @@ def main():
 
     elif args.command == "selfie":
         try:
-            # os.environ.setdefault("DEEPFACE_HOME", "/app")
+            os.environ.setdefault("DEEPFACE_HOME", "/app")
             
             from imface.utils import deepface_util as utils
-            instance = utils.FaceRecognitionSingleton()
-            data = instance.extract_face(path=args.path, detector=args.detector)
+            data = utils.extract_face(path=args.path, detector=args.detector)
             if len(data) > 1:
                 print("error only allowed one face")
                 raise SystemExit(1)
@@ -63,11 +61,10 @@ def main():
 
     elif args.command == "generate-crop-img":
             try:
-                # os.environ.setdefault("DEEPFACE_HOME", "/app")
+                os.environ.setdefault("DEEPFACE_HOME", "/app")
                 
                 from imface.utils import deepface_util as utils
-                instance = utils.FaceRecognitionSingleton()
-                file_names = instance.generate_faces_image(path=args.path, album_dir=args.output, detector=args.detector)
+                file_names = utils.generate_faces_image(path=args.path, album_dir=args.output, detector=args.detector)
                 print(file_names)
             except Exception as e:
                 print("error " + repr(e))
