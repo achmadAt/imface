@@ -48,7 +48,7 @@ def download_weights():
         gdown.download(facenet512_url, facenet512_weight_path, quiet=False)
 
     if os.path.isfile(yolov8_weight_path) != True:
-        print("yolov8m-face.onnx will be downloaded...")
+        print("yolov8 onnx will be downloaded...")
         gdown.download(yolov8_url, yolov8_weight_path, quiet=False)
         
 class CustomInstallCommand(install):
@@ -64,7 +64,7 @@ requirements = ["deepfacey==0.0.85"]
 
 setup(
     name='imface',
-    version='0.0.0.4.1',
+    version='0.0.0.4.2',
     install_requires=requirements,
     packages=find_packages(),
     include_package_data=True,

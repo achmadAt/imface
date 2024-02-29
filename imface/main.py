@@ -27,7 +27,7 @@ def main():
 
     args = parser.parse_args()
 
-    version =  "0.0.0.4.1"
+    version =  "0.0.0.4.2"
     if args.version:
         os.environ.setdefault("DEEPFACE_HOME", "/app")
         print(version + str(os.getenv("DEEPFACE_HOME", default=str(Path.home()))))
