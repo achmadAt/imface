@@ -38,25 +38,19 @@ home_dir = get_deepface_home()
 def download_weights():
     #url of the weights that need to be downloaded first
     facenet512_url = "https://github.com/serengil/deepface_models/releases/download/v1.0/facenet512_weights.h5"
-    retinaface_url = "https://github.com/serengil/deepface_models/releases/download/v1.0/retinaface.h5"
-    yolov8_url = "https://drive.google.com/uc?id=1qcr9DbgsX3ryrz2uU8w4Xm3cOrRywXqb"
+    yolov8_url = "https://drive.usercontent.google.com/u/0/uc?id=1UX8saXoKt36H9uMsZIPJt4jk3NoDvNTL"
     #path of the weights will be saved
     facenet512_weight_path = str(home_dir) + "/.deepface/weights/facenet512_weights.h5"
-    retinaface_weight_path = str(home_dir) + "/.deepface/weights/retinaface.h5"
-    yolov8_weight_path = str(home_dir) + "/.deepface/weights/yolov8n-face.pt"
+    yolov8_weight_path = str(home_dir) +"/.deepface/weights/yolov8m-face.onnx"
     
     if os.path.isfile(facenet512_weight_path) != True:
         print("facenet512_weights.h5 will be downloaded...")
         gdown.download(facenet512_url, facenet512_weight_path, quiet=False)
 
-    if os.path.isfile(retinaface_weight_path) != True:
-        print("retinaface.h5 will be downloaded...")
-        gdown.download(retinaface_url, retinaface_weight_path, quiet=False)
     if os.path.isfile(yolov8_weight_path) != True:
-        print("yolov8n-face.pt will be downloaded...")
-
+        print("yolov8m-face.onnx will be downloaded...")
         gdown.download(yolov8_url, yolov8_weight_path, quiet=False)
-
+        
 class CustomInstallCommand(install):
     def run(self):
         install.run(self)
@@ -66,11 +60,11 @@ class CustomInstallCommand(install):
 with open("README.md", "r") as file:
     description = file.read()
 
-requirements = ["deepface==0.0.81", "ultralytics"]
+requirements = ["deepfacey==0.0.85"]
 
 setup(
     name='imface',
-    version='0.0.0.3.4',
+    version='0.0.0.4.1',
     install_requires=requirements,
     packages=find_packages(),
     include_package_data=True,
