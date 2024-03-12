@@ -1,6 +1,5 @@
 import os
-from deepface import DeepFace
-from deepface.commons import distance as dst
+from deepfacey import DeepFace
 import uuid
 import cv2
 
