@@ -14,6 +14,7 @@ def main():
     represent_parser = subparsers.add_parser("represent")
     represent_parser.add_argument("-p", "--path", help="path image file", required=True)
     represent_parser.add_argument("-d", "--detector", help="detector", required=True)
+    represent_parser.add_argument("-t", "--threshold", help="Face Detector Threshold", required=False, default=0.75)
 
     #generate vector selfie
     selfie_parser = subparsers.add_parser("selfie")
@@ -24,7 +25,7 @@ def main():
     generate_parser.add_argument("-p", "--path", help="path to image file", required=True)
     generate_parser.add_argument("-o", "--output", help="directory to save image", required=True)
     generate_parser.add_argument("-d", "--detector", help="face detector", required=True)
-
+    generate_parser.add_argument("-t", "--threshold", help="Face Detector Threshold", required=False)
     args = parser.parse_args()
 
     version =  "0.0.0.4.2"
@@ -38,7 +39,7 @@ def main():
             os.environ.setdefault("DEEPFACE_HOME", "/app")
 
             from imface.utils import deepface_util as utils
-            embed = utils.get_embedding_vector(path=args.path, detector=args.detector)
+            embed = utils.get_embedding_vector(path=args.path, detector=args.detector, threshold=float(args.threshold))
             print(embed)
         except Exception as e:
             print("error " + repr(e))
@@ -60,15 +61,17 @@ def main():
             raise SystemExit(1)
 
     elif args.command == "generate-crop-img":
-            try:
-                os.environ.setdefault("DEEPFACE_HOME", "/app")
-                
-                from imface.utils import deepface_util as utils
-                file_names = utils.generate_faces_image(path=args.path, album_dir=args.output, detector=args.detector)
-                print(file_names)
-            except Exception as e:
-                print("error " + repr(e))
-                raise SystemExit(1)
+        try:
+            os.environ.setdefault("DEEPFACE_HOME", "/app")
+            if not os.path.exists(args.output):
+                os.makedirs(args.output)
 
-    if __name__ == "__main__":
-        main()
+            from imface.utils import deepface_util as utils
+            file_names = utils.generate_faces_image(path=args.path, album_dir=args.output, detector=args.detector, threshold=float(args.threshold))
+            print(file_names)
+        except Exception as e:
+            print("error " + repr(e))
+            raise SystemExit(1)
+
+if __name__ == "__main__":
+    main()

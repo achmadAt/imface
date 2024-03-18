@@ -11,7 +11,7 @@ def get_deepface_home():
     Returns:
         str: the home directory.
     """
-    os.environ.setdefault("DEEPFACE_HOME", "/app")
+    os.environ.setdefault("DEEPFACE_HOME", "/app") # This LINE cause error when we try to install in local environment, because APP folder is not initialized
     return str(os.getenv("DEEPFACE_HOME", default=str(Path.home())))
 
 def initialize_folder():
