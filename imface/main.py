@@ -15,6 +15,7 @@ def main():
     represent_parser.add_argument("-p", "--path", help="path image file", required=True)
     represent_parser.add_argument("-d", "--detector", help="detector", required=True)
     represent_parser.add_argument("-t", "--threshold", help="Face Detector Threshold", required=False, default=0.75)
+    represent_parser.add_argument('-check_blurry', action='store_true')
 
     #generate vector selfie
     selfie_parser = subparsers.add_parser("selfie")
@@ -25,7 +26,9 @@ def main():
     generate_parser.add_argument("-p", "--path", help="path to image file", required=True)
     generate_parser.add_argument("-o", "--output", help="directory to save image", required=True)
     generate_parser.add_argument("-d", "--detector", help="face detector", required=True)
-    generate_parser.add_argument("-t", "--threshold", help="Face Detector Threshold", required=False)
+    generate_parser.add_argument("-t", "--threshold", help="Face Detector Threshold", required=False, default=0.75)
+    generate_parser.add_argument('-check_blurry', action='store_true')
+
     args = parser.parse_args()
 
     version =  "0.0.0.4.2"
@@ -39,7 +42,7 @@ def main():
             os.environ.setdefault("DEEPFACE_HOME", "/app")
 
             from imface.utils import deepface_util as utils
-            embed = utils.get_embedding_vector(path=args.path, detector=args.detector, threshold=float(args.threshold))
+            embed = utils.get_embedding_vector(path=args.path, detector=args.detector, threshold=float(args.threshold), check_blurry=args.check_blurry)
             print(embed)
         except Exception as e:
             print("error " + repr(e))
@@ -67,7 +70,7 @@ def main():
                 os.makedirs(args.output)
 
             from imface.utils import deepface_util as utils
-            file_names = utils.generate_faces_image(path=args.path, album_dir=args.output, detector=args.detector, threshold=float(args.threshold))
+            file_names = utils.generate_faces_image(path=args.path, album_dir=args.output, detector=args.detector, threshold=float(args.threshold), check_blurry=args.check_blurry)
             print(file_names)
         except Exception as e:
             print("error " + repr(e))
