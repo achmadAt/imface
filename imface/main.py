@@ -1,9 +1,6 @@
-import sys
 import argparse
 from pathlib import Path
 import os
-import numpy as np
-import ast
 
 def main():
     parser = argparse.ArgumentParser("imface cli for image vector")
